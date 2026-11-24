@@ -60,15 +60,21 @@
         </template>
       </li>
     </ul>
-    <input type="text" placeholder="Beverage Name" />
-    <button>🍺 Make Beverage</button>
+    <input type="text" placeholder="Beverage Name" v-model="beverageStore.currentName"/>
+    <button @click="beverageStore.makeBeverage(beverageStore.currentName, beverageStore.currentTemp, beverageStore.curBase, beverageStore.curCreamer, beverageStore.curSyrup)">🍺 Make Beverage</button>
   </div>
-  <div id="beverage-container" style="margin-top: 20px"></div>
+  <div id="beverage-container" style="margin-top: 20px">
+    <template v-for='recipe in beverageStore.recipes' :key='recipe.id'>
+      <label>
+        <input type="radio" :id="recipe.id" :value="recipe"/>
+        {{recipe.name}}
+      </label>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
 import Beverage from "./components/Beverage.vue";
-import {ref} from "vue";
 import { useBeverageStore } from "./stores/beverageStore";
 const beverageStore = useBeverageStore();
 

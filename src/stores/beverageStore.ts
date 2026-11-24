@@ -3,6 +3,7 @@ import tempretures from "../data/tempretures.json";
 import bases from "../data/bases.json";
 import creamers from "../data/creamers.json";
 import syrups from "../data/syrups.json";
+import { BeverageType, BaseBeverageType, CreamerType, SyrupType } from "../types/beverage.ts";
 
 export const useBeverageStore = defineStore("BeverageStore", {
   state: () => ({
@@ -14,15 +15,28 @@ export const useBeverageStore = defineStore("BeverageStore", {
     curBase: bases[1],
     curCreamer: creamers[1],
     curSyrup: syrups[1],
+    currentName: '',
+    recipes: [] as BeverageType[],
   }),
 
 
   actions: {
-    setBase(newBase: any) {
-      this.curBase = newBase;
+    makeBeverage(newName: string, newTemp: string, newBase: BaseBeverageType, newCream: CreamerType, newSyrup: SyrupType) {
+      const newBev: BeverageType = {
+        id: `${newBase.id}-${newSyrup.id}-${newCream.id}`,
+        name: newName,
+        temp: newTemp,
+        base: newBase,
+        creamer: newCream,
+        syrup: newSyrup,
+      }
+      this.$patch((state) => {
+        this.recipes.push(newBev);
+      });
     },
-    makeBeverage() {},
     showBeverage() {},
   },
   persist: true,
 });
+
+//beverageStore.makeBeverage(currentName, currentTemp, curBase, curCreamer, curSyrup)
