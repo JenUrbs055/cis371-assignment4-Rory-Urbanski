@@ -17,6 +17,7 @@ export const useBeverageStore = defineStore("BeverageStore", {
     curSyrup: syrups[1],
     currentName: '',
     recipes: [] as BeverageType[],
+    currentRecipe: null,
   }),
 
 
@@ -31,10 +32,17 @@ export const useBeverageStore = defineStore("BeverageStore", {
         syrup: newSyrup,
       }
       this.$patch((state) => {
-        this.recipes.push(newBev);
+        state.recipes.push(newBev);
       });
     },
-    showBeverage() {},
+    showBeverage(curRecipe: BeverageType) {
+      this.$patch((state) => {
+        state.curBase = curRecipe.base,
+        state.curCreamer = curRecipe.creamer,
+        state.curSyrup = curRecipe.syrup,
+        state.currentTemp = curRecipe.temp
+      });
+    },
   },
   persist: true,
 });

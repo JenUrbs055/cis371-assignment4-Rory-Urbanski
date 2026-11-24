@@ -64,12 +64,16 @@
     <button @click="beverageStore.makeBeverage(beverageStore.currentName, beverageStore.currentTemp, beverageStore.curBase, beverageStore.curCreamer, beverageStore.curSyrup)">🍺 Make Beverage</button>
   </div>
   <div id="beverage-container" style="margin-top: 20px">
+    <ul>
+      <li>
     <template v-for='recipe in beverageStore.recipes' :key='recipe.id'>
-      <label>
-        <input type="radio" :id="recipe.id" :value="recipe"/>
-        {{recipe.name}}
-      </label>
+        <label>
+          <input type="radio" name="custom" :id="recipe.id" :value="recipe" @change="beverageStore.showBeverage(recipe)"/>
+          {{recipe.name}}
+        </label>
     </template>
+  </li>
+  </ul>
   </div>
 </template>
 
